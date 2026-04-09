@@ -1,165 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Name</title>
-
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f2eb;
+      --ink: #1a1710;
+      --muted: #6b6657;
+      --accent: #9EA3F5;
+      --line: #d4cfc4;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #f8f8f8;
-      color: #111;
-    }
-
-    .container {
-      width: 85%;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      padding: 30px 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--mono);
       font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* HERO */
-    .hero {
-      margin-top: 80px;
-      margin-bottom: 120px;
-    }
-
-    .hero h1 {
-      font-size: 64px;
-      font-weight: 400;
-      line-height: 1.1;
+    /* ── layout ── */
+    .page {
       max-width: 700px;
+      margin: 0 auto;
+      padding: 80px 32px 120px;
     }
 
-    /* PROJECTS */
-    .projects {
-      margin-bottom: 120px;
+    /* ── header ── */
+    header {
+      margin-bottom: 80px;
     }
 
-    .project {
-      border-top: 1px solid #ddd;
-      padding: 30px 0;
-      display: flex;
-      justify-content: space-between;
-      transition: opacity 0.3s;
-    }
-
-    .project:hover {
-      opacity: 0.6;
-    }
-
-    .project-title {
-      font-size: 22px;
-    }
-
-    .project-year {
-      color: #777;
-    }
-
-    /* ABOUT */
-    .about {
-      margin-bottom: 120px;
-      max-width: 600px;
-    }
-
-    .about h2 {
-      font-size: 28px;
+    .name {
+      font-family: var(--serif);
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
       margin-bottom: 20px;
     }
 
-    /* FOOTER */
-    footer {
-      border-top: 1px solid #ddd;
-      padding: 30px 0;
+    .name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── nav ── */
+    nav {
+      margin-bottom: 80px;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.2s;
+    }
+
+    nav a:hover { color: var(--ink); }
+    nav a:hover::after { width: 100%; }
+
+    /* ── sections ── */
+    section {
+      margin-bottom: 72px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* ── bio ── */
+    .bio {
+      font-family: var(--serif);
+      font-size: 22px;
+      line-height: 1.55;
+      font-weight: 400;
+      max-width: 560px;
+    }
+
+    .bio a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+    }
+
+    /* ── projects ── */
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .project {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0 32px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+
+    .project:first-child { border-top: 1px solid var(--line); }
+
+    .project:hover .project-title { color: var(--accent); }
+
+    .project-year {
+      font-size: 12px;
+      color: var(--muted);
+      padding-top: 3px;
+    }
+
+    .project-title {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 400;
+      margin-bottom: 4px;
+      transition: color 0.2s;
+    }
+
+    .project-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .project-tags {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    /* ── writing ── */
+    .posts {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .post {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .post:first-child { border-top: 1px solid var(--line); padding-top: 20px; }
+
+    .post-title {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 400;
+      flex: 1;
+      transition: color 0.2s;
+    }
+
+    .post:hover .post-title { color: var(--accent); }
+
+    .post-date {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── resume ── */
+    .resume-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--bg);
+      background: var(--ink);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 2px;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .resume-btn::before {
+      content: '↓';
       font-size: 14px;
+    }
+
+    .resume-btn:hover {
+      background: var(--accent);
+      color: var(--ink);
+    }
+
+    /* ── contact ── */
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .contact-links a {
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-links a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ── footer ── */
+    footer {
+      margin-top: 80px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--muted);
       display: flex;
       justify-content: space-between;
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 40px;
-      }
+    /* ── fade in ── */
+    @keyframes up {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
+    header { animation: up 0.5s ease both; }
+    nav    { animation: up 0.5s 0.1s ease both; }
+    section:nth-of-type(1) { animation: up 0.5s 0.15s ease both; }
+    section:nth-of-type(2) { animation: up 0.5s 0.2s ease both; }
+    section:nth-of-type(3) { animation: up 0.5s 0.25s ease both; }
+    section:nth-of-type(4) { animation: up 0.5s 0.3s ease both; }
+
+    @media (max-width: 500px) {
       .project {
-        flex-direction: column;
-        gap: 10px;
+        grid-template-columns: 1fr;
+        gap: 4px;
       }
+      .project-year { margin-bottom: 4px; }
     }
   </style>
 </head>
 <body>
-
-  <div class="container">
+  <div class="page">
 
     <header>
-      <div>YourName</div>
-      <nav>
-        <a href="#">Work</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-      </nav>
+      <h1 class="name">Ethan <em>Jones</em></h1>
+      <p class="tagline">Junior, B.S. in Computer Science · Milwaukee, WI</p>
     </header>
 
-    <section class="hero">
-      <h1>
-        I design simple, clean, and meaningful digital experiences.
-      </h1>
-    </section>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#resume">Resume</a>
+      <a href="#contact">Contact</a>
+    </nav>
 
-    <section class="projects">
-
-      <div class="project">
-        <div class="project-title">Project One</div>
-        <div class="project-year">2026</div>
-      </div>
-
-      <div class="project">
-        <div class="project-title">Project Two</div>
-        <div class="project-year">2025</div>
-      </div>
-
-      <div class="project">
-        <div class="project-title">Project Three</div>
-        <div class="project-year">2024</div>
-      </div>
-
-    </section>
-
-    <section class="about">
-      <h2>About</h2>
-      <p>
-        I'm a developer/designer focused on creating minimal and functional
-        digital products. I believe simplicity leads to better experiences.
+    <section id="about">
+      <p class="section-label">About</p>
+      <p class="bio">
+        I build things for the web. Currently at <a href="#">Some Company</a>, previously at <a href="#">Another Place</a>. 
+        I care about clean code, good typography, and interfaces that feel alive.
       </p>
     </section>
 
-    <footer>
-      <div>© 2026</div>
-      <div>
-        <a href="#">Twitter</a> /
-        <a href="#">GitHub</a>
+    <section id="work">
+      <p class="section-label">Selected work</p>
+      <div class="projects">
+
+        <a href="#" class="project">
+          <span class="project-year">2024</span>
+          <div>
+            <p class="project-title">Project Alpha</p>
+            <p class="project-desc">A short description of what this project does and why it matters. Keep it to two lines.</p>
+            <div class="project-tags">
+              <span class="tag">React</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Open source</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="project">
+          <span class="project-year">2023</span>
+          <div>
+            <p class="project-title">Project Beta</p>
+            <p class="project-desc">Another project description. What problem did it solve? Who uses it?</p>
+            <div class="project-tags">
+              <span class="tag">Go</span>
+              <span class="tag">Postgres</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="project">
+          <span class="project-year">2022</span>
+          <div>
+            <p class="project-title">Project Gamma</p>
+            <p class="project-desc">Third project, briefly described. Link can go to GitHub, a live demo, or a case study.</p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">ML</span>
+            </div>
+          </div>
+        </a>
+
       </div>
-    </footer>
+    </section>
 
-  </div>
+    <section id="resume">
+      <p class="section-label">Resume</p>
+      <a href="resume.pdf" download class="resume-btn">Download my Résumé</a>
+    </section>
 
-</body>
-</html>
+    <section id="contact">
+      <p class="section-label">Contact</p>
+      <div class="contact-links">
+        <a href="mailto:someone@example.com">Email</a>
+        <a href="https://github.com/ethan-j44" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/ethan-jones-27b89428a/" target="_blank">LinkedIn</a>
+        <a href="/cv.pdf" target="_blank">CV (PDF)</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>Ethan Jones</span>
+      <span>Updated 2026</span>
